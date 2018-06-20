@@ -1,0 +1,29 @@
+version: '3'
+services:
+    web:
+        image: web-apache
+        container_name: web-apache
+        ports:
+            - "8080:80"
+        volumes:
+              - ./public_html:/var/www/html
+        networks:
+            - webnet
+    db:
+        image: mariadb:10
+        container_name: web-maria
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=docker
+            - MYSQL_PASSWORD=docker
+            - MYSQL_DATABASE=docker
+        volumes:
+            - db-data:/var/lib/mysql
+        ports:
+            - "3316:3306"
+        networks:
+            - webnet
+networks:
+    webnet:
+volumes:
+    db-data: {}
